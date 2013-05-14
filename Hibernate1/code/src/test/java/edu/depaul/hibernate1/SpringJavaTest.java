@@ -1,6 +1,9 @@
 package edu.depaul.hibernate1;
 
 import java.util.List;
+import java.util.Properties;
+
+import javax.sql.DataSource;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -8,15 +11,23 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactoryBean;
+import org.springframework.orm.hibernate4.HibernateTransactionManager;
+import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.depaul.hibernate.domain.Message;
+import edu.depaul.hibernate1.SpringJavaTest.JavaConfig;
 
-@ContextConfiguration
+@ContextConfiguration(classes=JavaConfig.class)
 @RunWith(SpringJUnit4ClassRunner.class)
-public class SpringTest {
+public class SpringJavaTest {
 
 	private Session session;
 
@@ -112,5 +123,35 @@ public class SpringTest {
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
+	}
+
+	@Configuration
+	@EnableTransactionManagement
+	public static class JavaConfig {
+		@Bean
+		public PlatformTransactionManager transactionManager() {
+			return new HibernateTransactionManager(sessionFactory());
+		}
+
+		@Bean
+		public DataSource dataSource() {
+			EmbeddedDatabaseFactoryBean bean = new EmbeddedDatabaseFactoryBean();
+			bean.afterPropertiesSet(); // necessary because EmbeddedDatabaseFactoryBean is a FactoryBean
+			return bean.getObject();
+		}
+
+		@Bean
+		@SuppressWarnings("deprecation")
+		public SessionFactory sessionFactory() {
+			Properties properties = new Properties();
+			properties.put("hibernate.hbm2ddl.auto", "update");
+			properties.put("hibernate.show_sql", true);
+
+			return new LocalSessionFactoryBuilder(dataSource())
+			.addAnnotatedClass(Message.class)
+			.addProperties(properties)
+			// This is deprecated but necessary in Spring
+			.buildSessionFactory();
+		}
 	}
 }
