@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +30,7 @@ public class CollectionPersonTest {
 	private String initials = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	private DecimalFormat formatter = new DecimalFormat("###-##-####");
 
+	@DirtiesContext
 	@Test
 	@Transactional
 	@SuppressWarnings("unchecked")
@@ -62,6 +64,7 @@ public class CollectionPersonTest {
 
 		String name2 = nickNames[randomGenerator.nextInt(2)];
 
+		// Hack around the chance of inserting the same nickname twice
 		if(result.getNicknames().contains(name2)) {
 			result.addNickname("Big " + name2);
 		} else {

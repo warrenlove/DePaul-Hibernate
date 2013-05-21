@@ -1,0 +1,20 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="edu.depaul.hibernate.domain.xml">
+  <class name="Item" table="item">
+    <id name="id" type="long" column="id">
+      <generator class="native"/>
+    </id>
+    <property name="name" column="name" type="string" />
+    <property name="number" column="qty" type="int"/>
+    <property name="price" column="price" type="big_decimal"/>
+    
+    <set name="orders" table="order_item" cascade="all" inverse="true">
+    	<key column="item_id" not-null="true"/>
+    	<many-to-many entity-name="edu.depaul.hibernate.domain.xml.Order">
+    		<column name="order_id" not-null="true"/>
+    	</many-to-many>
+    </set>
+  </class>
+</hibernate-mapping>

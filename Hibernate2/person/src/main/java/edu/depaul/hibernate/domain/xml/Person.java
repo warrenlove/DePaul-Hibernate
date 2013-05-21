@@ -99,6 +99,6 @@ public class Person {
 
 	@Override
 	public String toString() {
-		return String.format("%s %s. %s was born on %s and lives at %s, %s %s, %s.", firstName, middleInitial, lastName, new SimpleDateFormat("MM/dd/yyyy").format(birthdate), address1, city, state, zip);
+		return String.format("%s %s. %s was born on %s with an ssn of %s and lives at %s, %s %s, %s.", firstName, middleInitial, lastName, new SimpleDateFormat("MM/dd/yyyy").format(birthdate), ssn, address1, city, state, zip);
 	}
 }

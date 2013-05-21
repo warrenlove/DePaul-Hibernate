@@ -1,6 +1,6 @@
 <!DOCTYPE hibernate-mapping PUBLIC
   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
   <class name="edu.depaul.hibernate.domain.xml.ComponentPerson" table="Person">
     <id name="id" type="long" column="id">
@@ -13,6 +13,7 @@
     <property name="ssn" column="ssn" type="string" unique="true" length="11"/>
 
 	<component name="homeAddress" class="edu.depaul.hibernate.domain.xml.ComponentAddress">
+		<parent name="parent"/>
 	    <property name="address1" column="home_address1" type="string" />
 	    <property name="city" column="home_city" type="string" />
 	    <property name="state" column="home_state" type="string" />
@@ -20,6 +21,7 @@
 	</component>
 
 	<component name="workAddress" class="edu.depaul.hibernate.domain.xml.ComponentAddress">
+		<parent name="parent"/>
 	    <property name="address1" column="work_address1" type="string" />
 	    <property name="city" column="work_city" type="string" />
 	    <property name="state" column="work_state" type="string" />

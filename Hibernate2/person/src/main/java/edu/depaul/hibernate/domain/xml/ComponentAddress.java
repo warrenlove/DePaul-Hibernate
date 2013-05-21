@@ -5,8 +5,7 @@ public class ComponentAddress {
 	private String city;
 	private String state;
 	private String zipCode;
-
-	public ComponentAddress() {}
+	private ComponentPerson parent;
 
 	public String getAddress1() {
 		return address1;
@@ -33,8 +32,15 @@ public class ComponentAddress {
 		zipCode = zip;
 	}
 
+	public ComponentPerson getParent() {
+		return parent;
+	}
+	public void setParent(ComponentPerson parent) {
+		this.parent = parent;
+	}
+
 	@Override
 	public String toString() {
-		return String.format("\t%s, %s %s, %s", address1, city, state, zipCode);
+		return String.format("\t%s: %s, %s %s, %s", parent.getFirstName(), address1, city, state, zipCode);
 	}
 }

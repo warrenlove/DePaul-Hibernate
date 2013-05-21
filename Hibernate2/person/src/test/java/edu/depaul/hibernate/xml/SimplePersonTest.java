@@ -1,6 +1,5 @@
 package edu.depaul.hibernate.xml;
 
-import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -10,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,8 +26,8 @@ public class SimplePersonTest {
 	private String[] firstNames = {"Tom", "Richard", "Harry"};
 	private String[] lastNames = {"Smith", "Johnson", "Williams"};
 	private String initials = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	private DecimalFormat formatter = new DecimalFormat("###-##-####");
 
+	@DirtiesContext
 	@Test
 	@Transactional
 	@SuppressWarnings("unchecked")
@@ -55,7 +55,7 @@ public class SimplePersonTest {
 		result.setFirstName(firstNames[randomGenerator.nextInt(2)]);
 		result.setLastName(lastNames[randomGenerator.nextInt(2)]);
 		result.setMiddleInitial(String.valueOf(initials.charAt(randomGenerator.nextInt(initials.length()))));
-		result.setSsn(formatter.format(randomGenerator.nextInt(999999999)));
+		result.setSsn(new StringBuilder().append(randomGenerator.nextInt(999999999)).insert(3, "-").insert(6, "-").toString());
 		result.setAddress1("123 4th Street");
 		result.setCity("Chicago");
 		result.setState("IL");

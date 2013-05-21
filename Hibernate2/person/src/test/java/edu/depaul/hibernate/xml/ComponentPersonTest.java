@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +30,7 @@ public class ComponentPersonTest {
 	private String initials = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	private DecimalFormat formatter = new DecimalFormat("###-##-####");
 
+	@DirtiesContext
 	@Test
 	@Transactional
 	@SuppressWarnings("unchecked")
@@ -57,19 +59,20 @@ public class ComponentPersonTest {
 		result.setLastName(lastNames[randomGenerator.nextInt(2)]);
 		result.setMiddleInitial(String.valueOf(initials.charAt(randomGenerator.nextInt(initials.length()))));
 		result.setSsn(formatter.format(randomGenerator.nextInt(999999999)));
-		result.setWorkAddress(buildAddress());
-		result.setHomeAddress(buildAddress());
+		result.setWorkAddress(buildAddress(result));
+		result.setHomeAddress(buildAddress(result));
 
 		return result;
 	}
 
-	private ComponentAddress buildAddress() {
+	private ComponentAddress buildAddress(ComponentPerson parent) {
 		ComponentAddress result = new ComponentAddress();
 
 		result.setAddress1("123 4th Street");
 		result.setCity("Chicago");
 		result.setState("IL");
 		result.setZipCode("60606");
+		result.setParent(parent);
 
 		return result;
 	}

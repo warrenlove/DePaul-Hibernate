@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,10 +29,11 @@ public class JoinPersonTest {
 	private String initials = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	private DecimalFormat formatter = new DecimalFormat("###-##-####");
 
+	@DirtiesContext
 	@Test
 	@Transactional
 	@SuppressWarnings("unchecked")
-	public void testSimplePerson() {
+	public void test() {
 		Session session = sessionFactory.getCurrentSession();
 
 		session.save(buildPerson());
@@ -42,7 +44,7 @@ public class JoinPersonTest {
 
 		System.err.println("********** P E O P L E ************");
 		for (JoinPerson person : people) {
-			System.err.println(person);
+			System.out.println(person);
 		}
 	}
 

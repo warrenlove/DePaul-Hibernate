@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +30,7 @@ public class ComponentPersonTest {
 	private String initials = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	private DecimalFormat formatter = new DecimalFormat("###-##-####");
 
+	@DirtiesContext
 	@Test
 	@Transactional
 	@SuppressWarnings("unchecked")
@@ -43,7 +45,7 @@ public class ComponentPersonTest {
 
 		System.err.println("********** P E O P L E ************");
 		for (ComponentPerson person : people) {
-			System.err.println(person);
+			System.out.println(person);
 		}
 	}
 

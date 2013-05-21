@@ -1,0 +1,12 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="edu.depaul.hibernate.domain.xml">
+  <class name="State" table="DM_STATE">
+    <id name="id" type="long" column="id">
+      <generator class="native"/>
+    </id>
+    <property name="name" column="name" type="string"/>
+    <property name="population" column="population" type="long"/>
+  </class>
+</hibernate-mapping>

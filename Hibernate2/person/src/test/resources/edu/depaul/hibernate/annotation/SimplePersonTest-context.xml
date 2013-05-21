@@ -10,10 +10,10 @@
 
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
-		<property name="configLocation" value="classpath:simple-person-annotation-hibernate.cfg.xml"/>
+		<property name="configLocation" value="classpath:annotation-hibernate.cfg.xml"/>
 		<property name="annotatedClasses">
 			<list>
-				<value>edu.depaul.hibernate.domain.annotation.JoinPerson</value>
+				<value>edu.depaul.hibernate.domain.annotation.Person</value>
 			</list>
 		</property>
 	</bean>
